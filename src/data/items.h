@@ -4110,7 +4110,7 @@ const struct Item gItems[] =
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
-
+//aca estan las mt
     [ITEM_HM_FLASH] =
     {
         .name = _("HM05"),
@@ -4536,5 +4536,31 @@ const struct Item gItems[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    },
+
+    [ITEM_LINTERNA] =
+    {
+        .name = _("LINTERNA"),
+        .itemId = ITEM_LINTERNA,
+        .price = 0,
+        .description = sLinternaDesc,
+        .importance = 1,
+        .registrability = TRUE,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Linterna,
+    },
+
+    [ITEM_TALADRO] =
+    {
+        .name = _("TALADRO"),
+        .itemId = ITEM_TALADRO,
+        .price = 0,
+        .description = sTaladroDesc,
+        .importance = 1,
+        .registrability = TRUE,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Taladro,
     },
 };

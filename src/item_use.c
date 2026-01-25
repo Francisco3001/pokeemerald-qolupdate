@@ -1131,6 +1131,27 @@ void ItemUseInBattle_EnigmaBerry(u8 taskId)
     }
 }
 
+void ItemUseOutOfBattle_Linterna(u8 taskId)
+{
+    if (SetUpFieldMove_Flash())
+    {
+        DestroyTask(taskId);
+    }
+    else
+    {
+        DisplayItemMessage(taskId, FONT_NORMAL, gText_CantUseThatHere, Task_ItemUse_CloseMessageBox);
+    }
+    //LLAMAR AL MOV DE LA MT
+}
+
+void ItemUseOutOfBattle_Taladro(u8 taskId)
+{
+    ItemUseOutOfBattle_EscapeRope(taskId);
+}
+
+
+
+
 void ItemUseOutOfBattle_CannotUse(u8 taskId)
 {
     DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
