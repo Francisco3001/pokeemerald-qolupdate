@@ -4538,7 +4538,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
 
-    [ITEM_LINTERNA] =
+    [ITEM_LINTERNA] = //funcionando completamente en orden
     {
         .name = _("LINTERNA"),
         .itemId = ITEM_LINTERNA,
@@ -4547,11 +4547,11 @@ const struct Item gItems[] =
         .importance = 1,
         .registrability = TRUE,
         .pocket = POCKET_KEY_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
+        .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Linterna,
     },
 
-    [ITEM_TALADRO] =
+    [ITEM_TALADRO] = //funcionando completamente en orden
     {
         .name = _("TALADRO"),
         .itemId = ITEM_TALADRO,

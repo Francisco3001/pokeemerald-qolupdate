@@ -72,6 +72,7 @@ static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
 static void ItemUseOnFieldCB_Taladro(u8 taskId);
+static void ItemUseOnFieldCB_Linterna(u8 taskId);
 
 // EWRAM variables
 EWRAM_DATA static TaskFunc sItemUseOnFieldCB = NULL;
@@ -1133,18 +1134,29 @@ void ItemUseInBattle_EnigmaBerry(u8 taskId)
     }
 }
 
+//LINTERNA
 void ItemUseOutOfBattle_Linterna(u8 taskId)
 {
-    if (SetUpFieldMove_Flash())
+    if ((gMapHeader.cave == TRUE)
+        && !FlagGet(FLAG_SYS_USE_FLASH))
     {
-        DestroyTask(taskId);
+        sItemUseOnFieldCB = ItemUseOnFieldCB_Linterna;
+        SetUpItemUseOnFieldCallback(taskId);
     }
     else
     {
-        DisplayItemMessage(taskId, FONT_NORMAL, gText_CantUseHere, CloseItemMessage);
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
     }
 }
 
+static void ItemUseOnFieldCB_Linterna(u8 taskId)
+{
+    FlagSet(FLAG_SYS_USE_FLASH);
+    ScriptContext_SetupScript(EventScript_UseFlash);
+    DestroyTask(taskId);
+}
+
+//TALADRO
 static void ItemUseOnFieldCB_Taladro(u8 taskId)
 {
     Overworld_ResetStateAfterDigEscRope();
