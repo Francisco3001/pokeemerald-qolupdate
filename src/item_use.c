@@ -41,6 +41,7 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "fldeff.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -70,6 +71,7 @@ static void Task_UseRepel(u8);
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
+static void ItemUseOnFieldCB_Taladro(u8 taskId);
 
 // EWRAM variables
 EWRAM_DATA static TaskFunc sItemUseOnFieldCB = NULL;
@@ -1139,14 +1141,28 @@ void ItemUseOutOfBattle_Linterna(u8 taskId)
     }
     else
     {
-        DisplayItemMessage(taskId, FONT_NORMAL, gText_CantUseThatHere, Task_ItemUse_CloseMessageBox);
+        DisplayItemMessage(taskId, FONT_NORMAL, gText_CantUseHere, CloseItemMessage);
     }
-    //LLAMAR AL MOV DE LA MT
+}
+
+static void ItemUseOnFieldCB_Taladro(u8 taskId)
+{
+    Overworld_ResetStateAfterDigEscRope();
+    gTasks[taskId].data[0] = 0;
+    DisplayItemMessageOnField(taskId, gStringVar4, Task_UseDigEscapeRopeOnField);
 }
 
 void ItemUseOutOfBattle_Taladro(u8 taskId)
 {
-    ItemUseOutOfBattle_EscapeRope(taskId);
+    if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_Taladro;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
 }
 
 
