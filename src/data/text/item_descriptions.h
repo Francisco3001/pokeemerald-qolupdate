@@ -1549,3 +1549,13 @@ static const u8 sOldSeaMapDesc[] = _(
     "A faded sea chart\n"
     "that shows the way\n"
     "to a certain island.");
+    
+static const u8 sLinternaDesc[] = _(
+    "Linterna bien fachera\n"
+    "para que no te pierdas\n"
+    "en las cuevas papi.");
+
+static const u8 sTaladroDesc[] = _(
+    "Y que los putos\n"
+    "de lanus la sigan\n"
+    "chupando eternamente");
