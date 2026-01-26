@@ -2623,6 +2623,100 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
             }
         }
     }
+        // --- NEW: MO HABILITADAS AL GANAR LA MEDALLA ---
+
+    // HABILITA CORTE CON LA 1 MEDALLA
+    if (FlagGet(FLAG_BADGE01_GET))
+    {   
+
+        bool8 hasCutAction = FALSE;
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+        {
+            if (sPartyMenuInternal->actions[i] == MENU_FIELD_MOVES + FIELD_MOVE_CUT)
+            {
+                hasCutAction = TRUE;
+                break;
+            }
+        }
+        if (!hasCutAction)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions,
+                         MENU_FIELD_MOVES + FIELD_MOVE_CUT);
+    }
+
+    //2 es destello, ya esta la linterna
+
+
+    // HABILITA GOLPE ROCA CON LA 3 MEDALLA
+    if (FlagGet(FLAG_BADGE03_GET))
+    {
+        bool8 has = FALSE;
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+        {
+            if (sPartyMenuInternal->actions[i] == MENU_FIELD_MOVES + FIELD_MOVE_ROCK_SMASH)
+            {
+                has = TRUE;
+                break;
+            }
+        }
+        if (!has)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions,
+                        MENU_FIELD_MOVES + FIELD_MOVE_ROCK_SMASH);
+    }
+
+    // HABILITA FUERZA CON LA 4 MEDALLA
+    if (FlagGet(FLAG_BADGE04_GET))
+    {
+        bool8 has = FALSE;
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+        {
+            if (sPartyMenuInternal->actions[i] == MENU_FIELD_MOVES + FIELD_MOVE_STRENGTH)
+            {
+                has = TRUE;
+                break;
+            }
+        }
+        if (!has)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions,
+                        MENU_FIELD_MOVES + FIELD_MOVE_STRENGTH);
+    }
+
+    // 5 es surf, se habilita y usa como siempre
+    // 6 es vuelo, se habilita y usa como siempre
+
+    // HABILITA BUCEO CON LA 7 MEDALLA Y SURF 
+    if (FlagGet(FLAG_BADGE07_GET) && PartyHasMove(MOVE_SURF))
+    {
+        bool8 has = FALSE;
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+        {
+            if (sPartyMenuInternal->actions[i] == MENU_FIELD_MOVES + FIELD_MOVE_DIVE)
+            {
+                has = TRUE;
+                break;
+            }
+        }
+        if (!has)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions,
+                        MENU_FIELD_MOVES + FIELD_MOVE_DIVE);
+    }
+
+    // HABILITA CASCADA CON LA 8 MEDALLA Y SURF
+    if (FlagGet(FLAG_BADGE08_GET) && PartyHasMove(MOVE_SURF))
+    {
+        bool8 has = FALSE;
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+        {
+            if (sPartyMenuInternal->actions[i] == MENU_FIELD_MOVES + FIELD_MOVE_WATERFALL)
+            {
+                has = TRUE;
+                break;
+            }
+        }
+        if (!has)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions,
+                        MENU_FIELD_MOVES + FIELD_MOVE_WATERFALL);
+    }
+    // ---------------------------------------------------------------
 
     if (!InBattlePike())
     {
@@ -2634,6 +2728,19 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_ITEM);
     }
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
+}
+
+static bool8 PartyHasMove(u16 move)
+{
+    u8 i;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            break;
+        if (MonKnowsMove(&gPlayerParty[i], move))
+            return TRUE;
+    }
+    return FALSE;
 }
 
 static u8 GetPartyMenuActionsType(struct Pokemon *mon)
