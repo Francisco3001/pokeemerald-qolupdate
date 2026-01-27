@@ -42,14 +42,14 @@ BattleFrontier_Lounge5_EventScript_LittleBoy::
 	end
 
 BattleFrontier_Lounge5_Text_NatureGirlGreeting::
-	.string "Ehehe!\n"
-	.string "I can tell what POKéMON are thinking!\p"
-	.string "Please!\n"
-	.string "Can I see your POKéMON?$"
+	.string "¡Je, je, je!\n"
+	.string "¡Yo puedo decirte lo que piensan los\l"
+	.string "POKéMON sobre esto de los combates!\p"
+	.string "Porfa, ¿me dejas ver tus POKéMON?$"
 
 BattleFrontier_Lounge5_Text_NatureGirlNoneShown::
-	.string "Boo!\n"
-	.string "Cheapie!$"
+	.string "¡Ay!\n"
+	.string "¡Qué carácter, oye!$"
 
 BattleFrontier_Lounge5_Text_NatureGirlHardy::
 	.string "Hmhm…\p"
@@ -184,20 +184,19 @@ BattleFrontier_Lounge5_Text_NatureGirlCareful::
 	.string "it will turn sneaky!$"
 
 BattleFrontier_Lounge5_Text_NatureGirlEgg::
-	.string "That's silly! An EGG is asleep!\n"
-	.string "I can't talk to it!$"
+	.string "¡Qué tontería! ¡Los HUEVOS duermen!\n"
+	.string "¡No puedo hablar con los HUEVOS!$"
 
 BattleFrontier_Lounge5_Text_LadyClaimsSheUnderstandsPokemon::
-	.string "How charming!\n"
-	.string "That little lady claims she can\l"
-	.string "understand POKéMON!$"
+	.string "¡Qué ricura!\n"
+	.string "¡Esa pequeña dice que puede leerles\l"
+	.string "el pensamiento a los POKéMON!$"
 
 BattleFrontier_Lounge5_Text_GirlSayingSomethingProfound::
-	.string "I have this feeling that the little girl\n"
-	.string "is saying something profound.$"
+	.string "Me parece a mí que esa niña\n"
+	.string "dice cosas la mar de profundas.$"
 
 BattleFrontier_Lounge5_Text_GirlPlaysAtRedHouseALot::
-	.string "I know something!\p"
-	.string "That little girl plays at the red house\n"
-	.string "a lot!$"
+	.string "¿Sabes una cosa? \p"
+	.string "¡Esa niña juega mucho en la casa roja!$"
 
