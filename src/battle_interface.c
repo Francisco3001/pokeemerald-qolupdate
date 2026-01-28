@@ -22,6 +22,7 @@
 #include "data.h"
 #include "pokemon_summary_screen.h"
 #include "strings.h"
+#include "type_icons.h"
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -872,7 +873,15 @@ u8 CreateBattlerHealthboxSprites(u8 battler)
     u8 healthboxLeftSpriteId, healthboxRightSpriteId;
     u8 healthbarSpriteId;
     struct Sprite *healthBarSpritePtr;
-
+    static bool8 sDidResetTypeIcons;
+    if (battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT))
+        ResetTypeIconsState();
+        ResetTypeIconsGfxState();
+    if (!sDidResetTypeIcons)
+    {
+        ResetTypeIconsGfxState();
+        sDidResetTypeIcons = TRUE;
+    }
     if (!IsDoubleBattle())
     {
         if (GetBattlerSide(battler) == B_SIDE_PLAYER)
@@ -946,7 +955,7 @@ u8 CreateBattlerHealthboxSprites(u8 battler)
     healthBarSpritePtr->hBar_HealthBoxSpriteId = healthboxLeftSpriteId;
     healthBarSpritePtr->hBar_Data6 = data6;
     healthBarSpritePtr->invisible = TRUE;
-
+    LoadTypeIcons(battler);
     return healthboxLeftSpriteId;
 }
 
@@ -2172,8 +2181,21 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
     {
         u8 isDoubles;
 
-        if (elementId == HEALTHBOX_LEVEL || elementId == HEALTHBOX_ALL)
-            UpdateLvlInHealthbox(healthboxSpriteId, GetMonData(mon, MON_DATA_LEVEL));
+        if (elementId == HEALTHBOX_NICK || elementId == HEALTHBOX_ALL)
+        {
+            u16 species;
+            u8 t1, t2;
+
+            UpdateNickInHealthbox(healthboxSpriteId, mon);
+
+            species = GetMonData(mon, MON_DATA_SPECIES);
+
+            // En muchos forks (expansion/qol) es así:
+            t1 = gSpeciesInfo[species].types[0];
+            t2 = gSpeciesInfo[species].types[1];
+
+            LoadTypeIconsEx(battler, species, t1, t2);
+        }
         if (elementId == HEALTHBOX_CURRENT_HP || elementId == HEALTHBOX_ALL)
             UpdateHpTextInHealthbox(healthboxSpriteId, GetMonData(mon, MON_DATA_HP), HP_CURRENT);
         if (elementId == HEALTHBOX_MAX_HP || elementId == HEALTHBOX_ALL)
@@ -2227,6 +2249,7 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
         }
         if (elementId == HEALTHBOX_NICK || elementId == HEALTHBOX_ALL)
             UpdateNickInHealthbox(healthboxSpriteId, mon);
+            LoadTypeIcons(battler);
         if (elementId == HEALTHBOX_STATUS_ICON || elementId == HEALTHBOX_ALL)
             UpdateStatusIconInHealthbox(healthboxSpriteId);
     }
