@@ -3293,7 +3293,7 @@ static void Cmd_getexp(void)
             sentIn = 0;
             for (i = 0; i < PARTY_SIZE; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
                     continue;
 
                 sentIn |= gBitTable[i];
@@ -3360,11 +3360,20 @@ static void Cmd_getexp(void)
                     gBattleStruct->wildVictorySong++;
                 }
 
-                // MOD: removed HP check so KO mons also gain exp
                 if (gBattleStruct->sentInPokes & 1)
-                    gBattleMoveDamage = *exp;
+                {
+                    if (gBattleStruct->expGetterMonId == gBattlerPartyIndexes[0])
+                        gBattleMoveDamage = *exp;          // el que peleó: 100%
+                    else
+                        gBattleMoveDamage = *exp / 2;      // resto: 50%
+                }
                 else
+                {
                     gBattleMoveDamage = 0;
+                }
+
+                if (gBattleMoveDamage == 0 && *exp != 0)
+                    gBattleMoveDamage = 1; // para que no quede 0 por división
 
                 // MOD: EXP Share extra disabled (gExpShareExp = 0), keep line harmless
                 if (holdEffect == HOLD_EFFECT_EXP_SHARE)
